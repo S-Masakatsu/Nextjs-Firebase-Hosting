@@ -1,0 +1,33 @@
+
+{
+  "functions": {
+    "source": "dist/functions",
+    "predeploy": [
+      "npm run typecheck:app",
+      "npm run build:functions",
+      "npm run build:app",
+      "npm run copy-deps",
+      "npm run install-deps"
+    ],
+    "runtime": "nodejs10"
+  },
+  "hosting": {
+    "public": "dist/public",
+    "predeploy": "npm run build:public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/v1/**/*",
+        "function": "api"
+      },
+      {
+        "source": "**/**",
+        "function": "nextApp"
+      }
+    ]
+  }
+}
